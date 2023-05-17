@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     // Fetch existing parking spots from the backend
     const fetchParkingSpots = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/parkings');
+        const response = await axios.get('parkings');
         console.log(response)
         const data = response.data;
         setParkingSpots(data);
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-        const response = await axios.post('http://localhost:3000/parkings', formData);
+        const response = await axios.post('parkings', formData);
         const newParkingSpot = response.data;
         setParkingSpots([...parkingSpots, newParkingSpot]);
         setFormData({

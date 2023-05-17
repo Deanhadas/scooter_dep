@@ -17,7 +17,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
 
     try {
       console.log("WWWOOOOOOWWW front")
-      const response = await axios.post('http://localhost:3000/login/', {
+      const response = await axios.post('login/', {
       username,
       password,
     });
