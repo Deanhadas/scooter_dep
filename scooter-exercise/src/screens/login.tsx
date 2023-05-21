@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { useNavigate  } from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../styles/LoginForm.css'; // Import custom CSS file
 
 interface LoginFormProps {
   onSubmit: (username: string, password: string) => void;
 }
-
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [username, setUsername] = useState('');
@@ -16,18 +16,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     event.preventDefault();
 
     try {
-      console.log("WWWOOOOOOWWW front")
-      const response = await axios.post('login/', {
-      username,
-      password,
-    });
-    if (response.status === 200) {
-      // Redirect to the Home page
-      navigate('/home');
-    }
+      const response = await axios.post('/login', {
+        username,
+        password,
+      });
 
-
-
+      if (response.status === 200) {
+        // Redirect to the Home page
+        navigate('/home');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -35,27 +32,39 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     onSubmit(username, password);
   };
 
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form className="login-form" onSubmit={handleSubmit}>
+      <div className="form-group">
         <label htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
           value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          onChange={handleUsernameChange}
+          className="form-input"
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={handlePasswordChange}
+          className="form-input"
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" className="form-button">
+        Login
+      </button>
     </form>
   );
 };
